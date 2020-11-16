@@ -2,24 +2,73 @@
 using namespace eosio;
 using std::string;
 
+struct group_param
+{
+	uint64_t ID,
+	string prod_offer_id,
+	string poidlabel,
+	string hash_phone,
+	string customer_locate,
+	uint64_t group_state,
+	uint64_t update_date,
+	uint64_t created_date
+
+	uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+};
+
+struct member_param
+{
+	uint64_t ID,
+	string prod_offer_id,
+	string mem_type,
+	string mem_lable,
+	string hash_number,
+	checksum256 hash_certNo,
+	string mem_locate,
+	uint8_t mem_state,
+	uint64_t update_date,
+	uint64_tcreated_date
+
+	uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+};
+
+
 //合约类，类名与文件名一致
-CONTRACT addressbook : public eosio::contract
+CONTRACT anjiabao : public eosio::contract
 {
 	public:
 		using contract::contract;
 
 	private:
 		//表对象的类型（即表中的row/record）
-		TABLE addressbook_t   
+		TABLE group_t
 		{
-		uint64_t id;
-		string   name;
-		uint8_t  age;
-		uint64_t phonenumber;
-		string   address;
+			uint64_t ID,
+			string prod_offer_id,
+			string poidlabel,
+			string hash_phone,
+			string customer_locate,
+			uint64_t group_state,
+			uint64_t update_date,
+			uint64_t created_date
 
-		uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
-		uint64_t by_phonenumber() const {return phonenumber;}
+			uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+		};
+
+		TABLE member_t
+		{
+			uint64_t ID,
+			string prod_offer_id,
+			string mem_type,
+			string mem_lable,
+			string hash_number,
+			checksum256 hash_certNo,
+			string mem_locate,
+			uint8_t mem_state,
+			uint64_t update_date,
+			uint64_tcreated_date
+
+			uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
 		};
 
 
@@ -35,14 +84,21 @@ CONTRACT addressbook : public eosio::contract
 		//	删：erase
 		//	改：modify
 		//	查：get/find
-		typedef eosio::multi_index<name("addressbooks"), addressbook_t,
-								 indexed_by<name("phonenumber"), const_mem_fun<addressbook_t, uint64_t, &addressbook_t::by_phonenumber>>
-								>addressbooks_t;
+		typedef eosio::multi_index<name("groups"), anjiabao_t,>groups_t;
+		typedef eosio::multi_index<name("members"), anjiabao_t,>members;
 
-		ACTION add( name account, string name, uint8_t age,  uint64_t phonenumber, string address );
-		ACTION remove(name account, uint64_t id);
-		ACTION update(name account, uint64_t id, string name, uint8_t age,  uint64_t phonenumber, string address);
-		ACTION clean(name account, int32_t batchsize, string confirm);
+		ACTION groupadd(name account, group_param param);
+		ACTION groupremove(name account, uint64_t id);
+		ACTION groupupdate(name account, group_param param);
+		ACTION groupclean(name account, int32_t batchsize, string confirm);
+
+		ACTION memberadd(name account, member_param param);
+		ACTION memberremove(name account, uint64_t id);
+		ACTION memberupdate(name account, member_param param);
+		ACTION memberclean(name account, int32_t batchsize, string confirm);
+
+
+
 		ACTION syscleantab(name table, std::vector<string> scope, int32_t batchsize, string confirm);
 		ACTION sysclean(int32_t batchsize, string confirm);
 
