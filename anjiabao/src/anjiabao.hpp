@@ -4,13 +4,13 @@ using std::string;
 
 struct group_param
 {
-	uint64_t ID,
-	string prod_offer_id,
-	string poidlabel,
-	string hash_phone,
-	string customer_locate,
-	uint64_t group_state,
-	uint64_t update_date,
+	uint64_t ID;
+	string prod_offer_id;
+	string poidlabel;
+	string hash_phone;
+	string customer_locate;
+	uint64_t group_state;
+	uint64_t update_date;
 	uint64_t created_date
 
 	uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
@@ -18,15 +18,15 @@ struct group_param
 
 struct member_param
 {
-	uint64_t ID,
-	string prod_offer_id,
-	string mem_type,
-	string mem_lable,
-	string hash_number,
-	checksum256 hash_certNo,
-	string mem_locate,
-	uint8_t mem_state,
-	uint64_t update_date,
+	uint64_t ID;
+	string prod_offer_id;
+	string mem_type;
+	string mem_lable;
+	string hash_number;
+	checksum256 hash_certNo;
+	string mem_locate;
+	uint8_t mem_state;
+	uint64_t update_date;
 	uint64_tcreated_date
 
 	uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
@@ -43,13 +43,13 @@ CONTRACT anjiabao : public eosio::contract
 		//表对象的类型（即表中的row/record）
 		TABLE group_t
 		{
-			uint64_t ID,
-			string prod_offer_id,
-			string poidlabel,
-			string hash_phone,
-			string customer_locate,
-			uint64_t group_state,
-			uint64_t update_date,
+			uint64_t ID;
+			string prod_offer_id;
+			string poidlabel;
+			string hash_phone;
+			string customer_locate;
+			uint64_t group_state;
+			uint64_t update_date;
 			uint64_t created_date
 
 			uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
@@ -57,15 +57,15 @@ CONTRACT anjiabao : public eosio::contract
 
 		TABLE member_t
 		{
-			uint64_t ID,
-			string prod_offer_id,
-			string mem_type,
-			string mem_lable,
-			string hash_number,
-			checksum256 hash_certNo,
-			string mem_locate,
-			uint8_t mem_state,
-			uint64_t update_date,
+			uint64_t ID;
+			string prod_offer_id;
+			string mem_type;
+			string mem_lable;
+			string hash_number;
+			checksum256 hash_certNo;
+			string mem_locate;
+			uint8_t mem_state;
+			uint64_t update_date;
 			uint64_tcreated_date
 
 			uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
