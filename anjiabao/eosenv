@@ -1,0 +1,1 @@
+alias cl="cleos -u http://127.0.0.1:3921 --wallet-url http://127.0.0.1:3923"
