@@ -6,14 +6,14 @@ ACTION anjiabao::groupadd(name account, group_param param) {
    groups_t groups(_self,  _self.value);
    groups.emplace(_self,
                         [&]( auto& row ){
-                           row.id          = anjiabaos.available_primary_key();
-                           row.name        = param.prod_offer_id;
-                           row.age         = param.poidlabel;
-                           row.phonenumber = param.hash_phone;
-                           row.group_state = param.group_state;
-                           row.update_date = param.update_date;
-                           row.address     = param.customer_locate;
-                           row.created_date= param.created_date;
+                           row.ID              = groups.available_primary_key();
+                           row.prod_offer_id   = param.prod_offer_id;
+                           row.poidlabel       = param.poidlabel;
+                           row.hash_phone      = param.hash_phone;
+                           row.customer_locate = param.customer_locate;
+                           row.group_state     = param.group_state;
+                           row.update_date     = param.update_date;
+                           row.created_date    = param.created_date;
                         }
                      );
 }
@@ -22,23 +22,23 @@ ACTION anjiabao::groupremove(name account, uint64_t id) {
    require_auth(account);
    groups_t groups(_self, _self.value);
    auto itr = groups.find(id);
-   anjiabaos.erase(itr);
+   groups.erase(itr);
 }
 
 ACTION anjiabao::groupupdate(name account, group_param param) {
    require_auth(account);
    groups_t groups(_self, _self.value);
-   auto itr = groups.find(id);
-   anjiabaos.modify( itr,
+   auto itr = groups.find(param.ID);
+   groups.modify( itr,
 		                _self,
                         [&]( auto& row ){
-						   row.name        = param.prod_offer_id;
-						   row.age         = param.poidlabel;
-						   row.phonenumber = param.hash_phone;
-						   row.group_state = param.group_state;
-						   row.update_date = param.update_date;
-						   row.address     = param.customer_locate;
-						   row.created_date= param.created_date;
+						   row.prod_offer_id   = param.prod_offer_id;
+						   row.poidlabel       = param.poidlabel;
+						   row.hash_phone      = param.hash_phone;
+						   row.customer_locate = param.customer_locate;
+						   row.group_state     = param.group_state;
+						   row.update_date     = param.update_date;
+						   row.created_date    = param.created_date;
                         }
                );
 }
@@ -64,19 +64,21 @@ ACTION anjiabao::groupclean( name account, int32_t batchsize, string confirm) {
 	}
 }
 
-ACTION anjiabao::memberadd(name account, group_param param) {
+ACTION anjiabao::memberadd(name account, member_param param) {
    require_auth( account );
    members_t members(_self,  _self.value);
    members.emplace(_self,
                         [&]( auto& row ){
-                           row.id          = anjiabaos.available_primary_key();
-                           row.name        = param.prod_offer_id;
-                           row.age         = param.poidlabel;
-                           row.phonenumber = param.hash_phone;
-                           row.group_state = param.group_state;
-                           row.update_date = param.update_date;
-                           row.address     = param.customer_locate;
-                           row.created_date= param.created_date;
+                           row.ID            = members.available_primary_key();
+                           row.prod_offer_id = param.prod_offer_id;
+                           row.mem_type      = param.mem_type;
+                           row.mem_lable     = param.mem_lable;
+                           row.hash_number   = param.hash_number;
+                           row.hash_certNo   = param.hash_certNo;
+                           row.mem_locate    = param.mem_locate;
+                           row.mem_state     = param.mem_state;
+                           row.update_date   = param.update_date;
+                           row.created_date  = param.created_date;
                         }
                      );
 }
@@ -85,23 +87,25 @@ ACTION anjiabao::memberremove(name account, uint64_t id) {
    require_auth(account);
    members_t members(_self, _self.value);
    auto itr = members.find(id);
-   anjiabaos.erase(itr);
+   members.erase(itr);
 }
 
-ACTION anjiabao::memberupdate(name account, group_param param) {
+ACTION anjiabao::memberupdate(name account, member_param param) {
    require_auth(account);
    members_t members(_self, _self.value);
-   auto itr = members.find(id);
+   auto itr = members.find(param.ID);
    members.modify( itr,
 		                _self,
                         [&]( auto& row ){
-						   row.name        = param.prod_offer_id;
-						   row.age         = param.poidlabel;
-						   row.phonenumber = param.hash_phone;
-						   row.group_state = param.group_state;
-						   row.update_date = param.update_date;
-						   row.address     = param.customer_locate;
-						   row.created_date= param.created_date;
+						   row.prod_offer_id = param.prod_offer_id;
+						   row.mem_type      = param.mem_type;
+						   row.mem_lable     = param.mem_lable;
+						   row.hash_number   = param.hash_number;
+						   row.hash_certNo   = param.hash_certNo;
+						   row.mem_locate    = param.mem_locate;
+						   row.mem_state     = param.mem_state;
+						   row.update_date   = param.update_date;
+						   row.created_date  = param.created_date;
                         }
                );
 }

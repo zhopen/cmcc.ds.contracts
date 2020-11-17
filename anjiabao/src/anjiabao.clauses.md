@@ -1,5 +1,5 @@
-<h1 class="clause">通讯录合约addressbook</h1>
+<h1 class="clause">安家宝合约</h1>
 ---
 spec-version: 1.0.1  
-title: 通信录
-summary: 记录联系人的地址，电话等信息
+title: 安家宝
+summary: 用于安家宝业务

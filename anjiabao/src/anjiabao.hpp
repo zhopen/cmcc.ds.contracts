@@ -11,9 +11,7 @@ struct group_param
 	string customer_locate;
 	uint64_t group_state;
 	uint64_t update_date;
-	uint64_t created_date
-
-	uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+	uint64_t created_date;
 };
 
 struct member_param
@@ -27,9 +25,7 @@ struct member_param
 	string mem_locate;
 	uint8_t mem_state;
 	uint64_t update_date;
-	uint64_tcreated_date
-
-	uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+	uint64_t created_date;
 };
 
 
@@ -50,9 +46,10 @@ CONTRACT anjiabao : public eosio::contract
 			string customer_locate;
 			uint64_t group_state;
 			uint64_t update_date;
-			uint64_t created_date
+			uint64_t created_date;
 
-			uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+			uint64_t primary_key() const {return ID;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+			uint64_t by_state() const {return update_date;}
 		};
 
 		TABLE member_t
@@ -66,9 +63,10 @@ CONTRACT anjiabao : public eosio::contract
 			string mem_locate;
 			uint8_t mem_state;
 			uint64_t update_date;
-			uint64_tcreated_date
+			uint64_t created_date;
 
-			uint64_t primary_key() const {return id;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+			uint64_t primary_key() const {return ID;}  //主键（primary key），但必须是唯一的无符号64位整型（uint64_t）
+			uint64_t by_state() const {return mem_state;}
 		};
 
 
@@ -84,8 +82,16 @@ CONTRACT anjiabao : public eosio::contract
 		//	删：erase
 		//	改：modify
 		//	查：get/find
-		typedef eosio::multi_index<name("groups"), anjiabao_t,>groups_t;
-		typedef eosio::multi_index<name("members"), anjiabao_t,>members;
+		typedef eosio::multi_index<
+				 name("groups"),
+				 group_t,
+				 indexed_by<name("state"), const_mem_fun<group_t, uint64_t, &group_t::by_state>>
+				>groups_t;
+		typedef eosio::multi_index<
+				 name("members"),
+				 member_t,
+				 indexed_by<name("state"), const_mem_fun<member_t, uint64_t, &member_t::by_state>>
+				>members_t;
 
 		ACTION groupadd(name account, group_param param);
 		ACTION groupremove(name account, uint64_t id);
